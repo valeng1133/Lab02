@@ -1,0 +1,50 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.print("Ingrese una línea de caracteres: ");
+        String input = scanner.nextLine().trim().toLowerCase(); // Convertir a minúsculas para un manejo consistente
+        
+
+        Map<Character, Integer> countMap = new HashMap<>();
+        for (char c : input.toCharArray()) {
+            if (Character.isLetter(c)) {  // Solo contar letras
+                countMap.put(c, countMap.getOrDefault(c, 0) + 1);
+            }
+        }
+        
+ 
+        List<Character> consonants = Arrays.asList('b', 'c', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'q', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z');
+        
+       
+        Character mostCommonChar = null;
+        int maxCount = 0;
+        
+        for (Character consonant : consonants) {
+            int count = countMap.getOrDefault(consonant, 0);
+            if (count > maxCount) {
+                maxCount = count;
+                mostCommonChar = consonant;
+            }
+        }
+        
+        if (mostCommonChar == null) {
+            System.out.println("No se encontraron consonantes en la entrada.");
+            return;
+        }
+        
+       
+        StringBuilder result = new StringBuilder(input);
+        for (int i = 0; i < result.length(); i++) {
+            if ("aeiou".indexOf(result.charAt(i)) != -1) { // Solo vocales minúsculas
+                result.setCharAt(i, mostCommonChar);
+            }
+        }
+        
+        String finalResult = result.reverse().toString();
+        
+        System.out.println("Resultado final: " + finalResult);
+    }
+}
